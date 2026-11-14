@@ -3,163 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sky Adventure - Game Pesawat</title>
+<title>Data Absensi Siswa</title>
 <style>
-:root{--sky:#bfe9ff;--deep:#17618e;--ink:#18384d}
+:root{--navy:#173653;--blue:#1976a8;--pale:#edf6fb;--ink:#243746;--line:#d9e3e9;--green:#26734f}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(#e9f8ff,#c6eaff);color:var(--ink);min-height:100vh}
-header{text-align:center;padding:22px 12px 10px}
-h1{margin:0 0 6px;font-size:clamp(1.7rem,5vw,2.4rem);color:#15547d}
-header p{margin:0;color:#456779}
-main{max-width:760px;margin:12px auto 28px;padding:0 14px}
-.game-card{background:#fff;padding:14px;border-radius:18px;box-shadow:0 8px 25px #15547d1c}
-.hud{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:2px 5px 12px;font-weight:bold;color:#174b6b}
-canvas{display:block;width:100%;height:auto;aspect-ratio:3/4;background:#8bd5f5;border-radius:13px;touch-action:none}
-.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:13px}
-button{border:0;border-radius:10px;padding:11px 18px;background:#176d9f;color:white;font-weight:bold;font-size:1rem;cursor:pointer}
-button:hover{background:#124d72}
-button:focus-visible{outline:3px solid #f0b94c;outline-offset:3px}
-.instructions{text-align:center;color:#526c7b;font-size:.92rem;line-height:1.5;margin:12px 4px 2px}
-.touch-controls{display:flex;justify-content:center;gap:18px;margin-top:12px}
-.touch-controls button{width:76px;height:48px;font-size:1.25rem;touch-action:none}
-footer{text-align:center;color:#5d7888;font-size:.9rem;padding:0 12px 22px}
+body{margin:0;background:#f3f7fa;color:var(--ink);font:15px/1.5 Arial,Helvetica,sans-serif}
+header{background:linear-gradient(120deg,#173653,#1976a8);color:#fff;padding:28px 18px;text-align:center}
+header h1{margin:0 0 5px;font-size:clamp(1.6rem,4vw,2.25rem)}
+header p{margin:0;opacity:.9}
+main{max-width:1150px;margin:22px auto;padding:0 15px 35px}
+.panel{background:#fff;border-radius:13px;padding:19px;margin-bottom:17px;box-shadow:0 3px 14px #17365310}
+h2{font-size:1.12rem;color:var(--navy);margin:0 0 14px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+label{display:block;font-weight:bold;font-size:.9rem;color:#435867}
+input,select{width:100%;padding:10px;border:1px solid #cbd8e0;border-radius:8px;margin-top:5px;font:inherit;background:#fff;color:var(--ink)}
+button{border:0;border-radius:8px;padding:10px 14px;background:var(--blue);color:#fff;font-weight:bold;cursor:pointer;margin:5px 5px 0 0}
+button:hover{background:var(--navy)}
+button.secondary{background:#647786}
+button.danger{background:#a43b3b}
+button.small{padding:6px 9px;font-size:.85rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat{background:var(--pale);padding:13px;border-radius:10px;text-align:center}
+.stat strong{display:block;font-size:1.55rem;color:var(--navy)}
+.stat span{font-size:.85rem;color:#536a79}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:10px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{background:#eef5f9;color:var(--navy);font-size:.9rem}
+td select{min-width:115px;margin:0;padding:7px}
+td input{margin:0;padding:7px;min-width:130px}
+.empty{text-align:center;color:#637785;padding:24px}
+.actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.hint{color:#637785;font-size:.88rem;margin:8px 0 0}
+@media(max-width:620px){.stats{grid-template-columns:repeat(2,1fr)}.panel{padding:14px}}
+@media print{body{background:white}header{background:white;color:#111;padding:10px}main{margin:0;max-width:none}.panel{box-shadow:none;border:1px solid #ddd;break-inside:avoid}button,.no-print{display:none!important}input,select{border:0;padding:0;appearance:none}table{min-width:0;font-size:11px}th,td{padding:6px}}
 </style>
 </head>
 <body>
 <header>
-<h1>✈️ Sky Adventure</h1>
-<p>Terbangkan pesawat, hindari awan badai, dan kumpulkan bintang!</p>
+<h1>DATA ABSENSI SISWA</h1>
+<p>Administrasi Kehadiran Peserta Didik</p>
 </header>
 <main>
-<section class="game-card">
-<div class="hud">
-<span>⭐ Skor: <span id="score">0</span></span>
-<span>❤️ Kesempatan: <span id="lives">3</span></span>
-<span>🏆 Terbaik: <span id="best">0</span></span>
+<section class="panel">
+<h2>Identitas Kelas dan Absensi</h2>
+<div class="form-grid">
+<label>Nama Sekolah<input id="school" placeholder="Nama sekolah"></label>
+<label>Kelas<input id="className" placeholder="Contoh: XI Informatika"></label>
+<label>Mata Pelajaran<input id="subject" placeholder="Contoh: Informatika"></label>
+<label>Nama Guru<input id="teacher" placeholder="Nama guru"></label>
+<label>Tanggal Absensi<input id="date" type="date"></label>
+<label>Semester
+<select id="semester"><option value="Ganjil">Ganjil</option><option value="Genap">Genap</option></select>
+</label>
 </div>
-<canvas id="game" width="600" height="800" aria-label="Permainan pesawat terbang"></canvas>
-<div class="controls">
-<button id="startBtn">Mulai Bermain</button>
-<button id="pauseBtn">Jeda</button>
-<button id="restartBtn">Ulangi</button>
-</div>
-<div class="touch-controls">
-<button id="leftBtn" aria-label="Terbang ke kiri">◀</button>
-<button id="rightBtn" aria-label="Terbang ke kanan">▶</button>
-</div>
-<p class="instructions">Gunakan tombol ← dan → pada keyboard, atau tombol arah di layar ponsel. Hindari awan gelap dan kumpulkan bintang. Tekan Spasi untuk jeda.</p>
 </section>
-</main>
-<footer>Game edukasi sederhana · Latihan koordinasi dan konsentrasi</footer>
-<script>
-(() => {
-const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
-const scoreEl=document.getElementById('score'),livesEl=document.getElementById('lives'),bestEl=document.getElementById('best');
-const startBtn=document.getElementById('startBtn'),pauseBtn=document.getElementById('pauseBtn'),restartBtn=document.getElementById('restartBtn');
-const W=canvas.width,H=canvas.height;
-let plane,items,score,lives,best,frame,state,keys={},touch={},stars=[];
-best=0;
-try{best=Number(localStorage.getItem('skyAdventureBest')||0)}catch(e){}
-bestEl.textContent=best;
 
-function reset(){
- plane={x:W/2,y:H-125,w:58,h:76,speed:7};
- items=[];score=0;lives=3;frame=0;state='ready';
- scoreEl.textContent=score;livesEl.textContent=lives;
-}
-function drawBackground(){
- const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#73c9f0');g.addColorStop(1,'#d8f5ff');
- ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
- // Matahari
- ctx.fillStyle='#fff2a8';ctx.beginPath();ctx.arc(490,105,48,0,Math.PI*2);ctx.fill();
- // Awan dekoratif
- for(let i=0;i<5;i++){
-  const x=((i*157-frame*.35)%(W+180)+W+180)%(W+180)-70;
-  const y=80+(i%3)*125;
-  drawCloud(x,y,false);
+<section class="panel">
+<h2>Tambah Data Siswa</h2>
+<div class="form-grid">
+<label>Nama Siswa<input id="studentName" placeholder="Masukkan nama siswa"></label>
+<label>NIS / Nomor Absen<input id="studentId" placeholder="Masukkan NIS atau nomor absen"></label>
+</div>
+<div class="actions">
+<button id="addStudent">Tambah Siswa</button>
+<button class="secondary" id="sampleData">Isi Contoh Data</button>
+</div>
+<p class="hint">Data disimpan pada penyimpanan browser di perangkat ini. Hindari menggunakan perangkat bersama jika data siswa bersifat pribadi.</p>
+</section>
+
+<section class="panel">
+<h2>Rekap Kehadiran</h2>
+<div class="stats">
+<div class="stat"><strong id="total">0</strong><span>Jumlah Siswa</span></div>
+<div class="stat"><strong id="present">0</strong><span>Hadir</span></div>
+<div class="stat"><strong id="sick">0</strong><span>Sakit</span></div>
+<div class="stat"><strong id="permission">0</strong><span>Izin</span></div>
+</div>
+<div class="hint" id="absentLine">Alpa: 0 siswa</div>
+</section>
+
+<section class="panel">
+<div class="actions" style="justify-content:space-between">
+<h2 style="margin:0">Daftar Absensi</h2>
+<div class="actions no-print">
+<button id="markAll">Tandai Semua Hadir</button>
+<button class="secondary" id="print">Cetak</button>
+<button class="secondary" id="csv">Unduh CSV</button>
+</div>
+</div>
+<div class="table-wrap" style="margin-top:13px">
+<table>
+<thead><tr><th>No.</th><th>NIS / No. Absen</th><th>Nama Siswa</th><th>Status Kehadiran</th><th>Keterangan</th><th class="no-print">Aksi</th></tr></thead>
+<tbody id="studentRows"><tr><td colspan="6" class="empty">Belum ada data siswa. Tambahkan siswa terlebih dahulu.</td></tr></tbody>
+</table>
+</div>
+</section>
+<div class="actions no-print">
+<button class="danger" id="clearAll">Hapus Semua Data</button>
+</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const STORAGE_KEY='absensiSiswaHTML_v1';
+let students=[];
+try{students=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');if(!Array.isArray(students))students=[]}catch(e){students=[]}
+$('date').value=new Date().toISOString().slice(0,10);
+
+function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(students))}catch(e){alert('Penyimpanan browser tidak tersedia atau penuh. Silakan unduh CSV sebagai cadangan.')} }
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){
+ const body=$('studentRows');
+ if(!students.length){body.innerHTML='<tr><td colspan="6" class="empty">Belum ada data siswa. Tambahkan siswa terlebih dahulu.</td></tr>'}
+ else{
+  body.innerHTML=students.map((s,i)=>`<tr>
+  <td>${i+1}</td><td>${esc(s.id)}</td><td>${esc(s.name)}</td>
+  <td><select aria-label="Status ${esc(s.name)}" data-status="${i}">
+   ${['Hadir','Sakit','Izin','Alpa'].map(v=>`<option ${s.status===v?'selected':''}>${v}</option>`).join('')}
+  </select></td>
+  <td><input data-note="${i}" aria-label="Keterangan ${esc(s.name)}" value="${esc(s.note||'')}" placeholder="Keterangan (opsional)"></td>
+  <td class="no-print"><button class="danger small" data-delete="${i}">Hapus</button></td></tr>`).join('');
  }
+ body.querySelectorAll('[data-status]').forEach(el=>el.addEventListener('change',e=>{students[+e.target.dataset.status].status=e.target.value;save();updateStats()}));
+ body.querySelectorAll('[data-note]').forEach(el=>el.addEventListener('change',e=>{students[+e.target.dataset.note].note=e.target.value;save()}));
+ body.querySelectorAll('[data-delete]').forEach(el=>el.addEventListener('click',e=>{const i=+e.target.dataset.delete;if(confirm(`Hapus data ${students[i].name}?`)){students.splice(i,1);save();render()}}));
+ updateStats();
 }
-function drawCloud(x,y,dark){
- ctx.fillStyle=dark?'#607d91':'rgba(255,255,255,.85)';
- ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.arc(x+27,y-12,31,0,Math.PI*2);ctx.arc(x+57,y,24,0,Math.PI*2);ctx.fill();
+function updateStats(){
+ const count=status=>students.filter(s=>s.status===status).length;
+ $('total').textContent=students.length;$('present').textContent=count('Hadir');$('sick').textContent=count('Sakit');$('permission').textContent=count('Izin');$('absentLine').textContent=`Alpa: ${count('Alpa')} siswa`;
 }
-function drawPlane(){
- ctx.save();ctx.translate(plane.x,plane.y);
- // badan pesawat
- ctx.fillStyle='#f5f8fb';ctx.strokeStyle='#245675';ctx.lineWidth=3;
- ctx.beginPath();ctx.moveTo(0,-39);ctx.quadraticCurveTo(15,-18,12,22);ctx.lineTo(0,34);ctx.lineTo(-12,22);ctx.quadraticCurveTo(-15,-18,0,-39);ctx.fill();ctx.stroke();
- // sayap
- ctx.fillStyle='#e94f58';ctx.beginPath();ctx.moveTo(-10,-4);ctx.lineTo(-34,17);ctx.lineTo(-29,26);ctx.lineTo(-7,19);ctx.lineTo(7,19);ctx.lineTo(29,26);ctx.lineTo(34,17);ctx.lineTo(10,-4);ctx.fill();ctx.stroke();
- // ekor
- ctx.beginPath();ctx.moveTo(-7,23);ctx.lineTo(-19,34);ctx.lineTo(-14,38);ctx.lineTo(14,38);ctx.lineTo(19,34);ctx.lineTo(7,23);ctx.fill();ctx.stroke();
- ctx.fillStyle='#7ed8f5';ctx.beginPath();ctx.ellipse(0,-13,6,10,0,0,Math.PI*2);ctx.fill();
- ctx.restore();
+function addStudent(){
+ const name=$('studentName').value.trim(),id=$('studentId').value.trim();
+ if(!name){alert('Masukkan nama siswa terlebih dahulu.');return}
+ if(students.some(s=>s.id.toLowerCase()===id.toLowerCase()&&id)){alert('NIS atau nomor absen tersebut sudah digunakan.');return}
+ students.push({id:id||'-',name,status:'Hadir',note:''});save();render();$('studentName').value='';$('studentId').value='';$('studentName').focus();
 }
-function drawStar(x,y){
- ctx.save();ctx.translate(x,y);ctx.fillStyle='#ffca3a';ctx.strokeStyle='#d68a00';ctx.lineWidth=2;
- ctx.beginPath();for(let i=0;i<10;i++){const r=i%2?10:21;const a=-Math.PI/2+i*Math.PI/5;ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();
-}
-function drawItems(){
- for(const it of items){if(it.type==='star')drawStar(it.x,it.y);else drawCloud(it.x,it.y,true)}
-}
-function overlay(title,subtitle){
- ctx.fillStyle='rgba(11,45,67,.62)';ctx.fillRect(0,0,W,H);
- ctx.textAlign='center';ctx.fillStyle='white';ctx.font='bold 48px Arial';ctx.fillText(title,W/2,H/2-22);
- ctx.font='24px Arial';ctx.fillText(subtitle,W/2,H/2+25);
-}
-function update(){
- frame++;
- if(keys.ArrowLeft||touch.left)plane.x-=plane.speed;
- if(keys.ArrowRight||touch.right)plane.x+=plane.speed;
- plane.x=Math.max(42,Math.min(W-42,plane.x));
- if(frame%48===0){
-  const x=55+Math.random()*(W-110);
-  items.push({x,y:-35,type:Math.random()<.68?'cloud':'star',r:25,speed:3.2+Math.min(score/180,3)});
- }
- for(const it of items)it.y+=it.speed;
- items=items.filter(it=>it.y<H+50);
- for(let i=items.length-1;i>=0;i--){
-  const it=items[i],dx=it.x-plane.x,dy=it.y-plane.y;
-  if(Math.hypot(dx,dy)<(it.type==='star'?31:38)){
-   if(it.type==='star'){score+=10;scoreEl.textContent=score}
-   else{lives--;livesEl.textContent=lives;if(lives<=0){endGame()}}
-   items.splice(i,1);
-  }
- }
- if(score>best){best=score;bestEl.textContent=best;try{localStorage.setItem('skyAdventureBest',best)}catch(e){}}
-}
-function endGame(){state='over';}
-function draw(){
- drawBackground();drawItems();drawPlane();
- if(state==='ready')overlay('SKY ADVENTURE','Tekan Mulai Bermain');
- if(state==='paused')overlay('DIJEDA','Tekan Jeda untuk melanjutkan');
- if(state==='over')overlay('PERMAINAN SELESAI',`Skor kamu: ${score}  ·  Tekan Ulangi`);
-}
-function loop(){
- if(state==='playing')update();
- draw();
- requestAnimationFrame(loop);
-}
-function start(){if(state==='ready'||state==='over'){reset();state='playing'}else if(state==='paused'){state='playing'}}
-function togglePause(){if(state==='playing')state='paused';else if(state==='paused')state='playing'}
-startBtn.addEventListener('click',start);
-pauseBtn.addEventListener('click',togglePause);
-restartBtn.addEventListener('click',()=>{reset();state='playing'});
-document.addEventListener('keydown',e=>{
- if(['ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();
- keys[e.key]=true;if(e.key===' ')togglePause();
+$('addStudent').addEventListener('click',addStudent);
+$('studentName').addEventListener('keydown',e=>{if(e.key==='Enter')addStudent()});
+$('sampleData').addEventListener('click',()=>{
+ if(students.length&&!confirm('Tambahkan data contoh ke daftar yang sudah ada?'))return;
+ const examples=[['001','Andi Saputra'],['002','Bunga Lestari'],['003','Citra Permata'],['004','Doni Pratama'],['005','Eka Putri']];
+ examples.forEach(([id,name])=>{if(!students.some(s=>s.id===id))students.push({id,name,status:'Hadir',note:''})});save();render();
 });
-document.addEventListener('keyup',e=>{keys[e.key]=false});
-function bindHold(id,dir){
- const el=document.getElementById(id);
- const on=e=>{e.preventDefault();touch[dir]=true};
- const off=e=>{e.preventDefault();touch[dir]=false};
- el.addEventListener('pointerdown',on);
- ['pointerup','pointerleave','pointercancel'].forEach(ev=>el.addEventListener(ev,off));
+$('markAll').addEventListener('click',()=>{students.forEach(s=>s.status='Hadir');save();render()});
+$('print').addEventListener('click',()=>window.print());
+$('clearAll').addEventListener('click',()=>{if(confirm('Yakin ingin menghapus seluruh data siswa dan absensi? Tindakan ini tidak dapat dibatalkan.')){students=[];save();render()}});
+function download(filename,content,type){
+ const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();URL.revokeObjectURL(url);
 }
-bindHold('leftBtn','left');bindHold('rightBtn','right');
-reset();loop();
-})();
+$('csv').addEventListener('click',()=>{
+ const meta=[['Nama Sekolah',$('school').value],['Kelas',$('className').value],['Mata Pelajaran',$('subject').value],['Guru',$('teacher').value],['Tanggal',$('date').value],['Semester',$('semester').value]];
+ const rows=[...meta.map(r=>r.map(csvCell).join(';')),[],['No','NIS / No. Absen','Nama Siswa','Status','Keterangan'],...students.map((s,i)=>[i+1,s.id,s.name,s.status,s.note||''].map(csvCell))];
+ download('absensi_siswa.csv','\uFEFF'+rows.map(r=>Array.isArray(r)?r.join(';'):'').join('\r\n'),'text/csv;charset=utf-8');
+});
+function csvCell(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}
+$('school').addEventListener('input',()=>{}); // Identitas dapat diisi sebelum dicetak.
+render();
 </script>
 </body>
 </html>
