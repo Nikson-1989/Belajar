@@ -3,112 +3,141 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kuis Macam-Macam Jaringan Komputer</title>
+<title>Permainan Puzzle Angka</title>
 <style>
-:root{--navy:#173653;--blue:#1976a8;--pale:#edf6fb;--ink:#253746;--green:#24734f;--red:#b33b3b}
+:root{--navy:#173653;--blue:#1976a8;--pale:#eaf4fa;--ink:#243746;--green:#26734f}
 *{box-sizing:border-box}
-body{margin:0;background:#f3f7fa;color:var(--ink);font:16px/1.6 Arial,sans-serif}
-header{background:linear-gradient(120deg,#173653,#1976a8);color:white;text-align:center;padding:38px 18px}
-header h1{margin:0 0 8px;font-size:clamp(1.7rem,4vw,2.5rem)}
-header p{margin:0}
-main{max-width:900px;margin:24px auto;padding:0 16px}
-.panel,.question{background:white;border-radius:13px;padding:21px;margin:16px 0;box-shadow:0 3px 14px #17365312}
-.panel h2{margin-top:0;color:var(--navy)}
-.meta{display:flex;gap:12px;flex-wrap:wrap;color:#526575;font-size:.94rem}
-.question h3{margin:0 0 13px;color:var(--navy);font-size:1.06rem}
-.option{display:block;padding:10px 12px;margin:8px 0;border:1px solid #d7e2e9;border-radius:9px;cursor:pointer}
-.option:hover{background:var(--pale)}
-.option input{margin-right:9px;accent-color:var(--blue)}
-button{border:0;border-radius:9px;padding:12px 19px;background:var(--blue);color:white;font-size:1rem;cursor:pointer;margin:6px 7px 6px 0}
-button:hover{background:var(--navy)}
+body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(145deg,#edf5fa,#f8fafc)}
+header{text-align:center;padding:32px 16px 18px;color:var(--navy)}
+header h1{margin:0 0 8px;font-size:clamp(1.8rem,5vw,2.6rem)}
+header p{margin:0;color:#536979}
+main{max-width:760px;margin:0 auto;padding:10px 16px 36px}
+.card{background:white;border-radius:18px;padding:22px;box-shadow:0 8px 28px #17365314}
+.instructions{line-height:1.6;margin-top:0}
+.status{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:18px 0;font-weight:bold;color:var(--navy)}
+.board{width:min(88vw,420px);aspect-ratio:1;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px;background:#dce9f1;border-radius:15px}
+.tile{border:0;border-radius:11px;background:linear-gradient(145deg,#2589bd,#17658f);color:white;font-size:clamp(1.8rem,7vw,3rem);font-weight:bold;cursor:pointer;box-shadow:0 3px 7px #12364b30;transition:transform .12s,filter .12s}
+.tile:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.tile:focus-visible{outline:4px solid #f0b84a;outline-offset:2px}
+.tile.empty{background:#f5f8fa;box-shadow:inset 0 2px 7px #17365315;cursor:default}
+.controls{text-align:center;margin-top:20px}
+button.action{border:0;border-radius:9px;padding:11px 17px;margin:5px;background:var(--blue);color:white;font-size:1rem;cursor:pointer}
+button.action:hover{background:var(--navy)}
 button.secondary{background:#647786}
-#result{display:none}
-.score{font-size:1.5rem;font-weight:bold;color:var(--navy)}
-.feedback{padding:10px 12px;border-radius:8px;margin:9px 0;background:#f0f4f7}
-.correct{border-left:4px solid var(--green)}
-.incorrect{border-left:4px solid var(--red)}
-footer{text-align:center;padding:24px;color:#60717e}
-@media print{button{display:none}.panel,.question{box-shadow:none;border:1px solid #ddd}}
+.message{min-height:28px;text-align:center;font-weight:bold;color:var(--green);margin:14px 0 0}
+.note{font-size:.92rem;color:#5a6c79;text-align:center;margin:14px 0 0}
+footer{text-align:center;color:#6b7d88;padding:0 15px 25px;font-size:.9rem}
+@media(max-width:420px){.card{padding:15px}.board{gap:5px;padding:5px}}
 </style>
 </head>
 <body>
 <header>
-  <h1>Kuis Macam-Macam Jaringan Komputer</h1>
-  <p>Materi Informatika | Latihan pemahaman jaringan komputer</p>
+  <h1>🧩 Puzzle Angka</h1>
+  <p>Susun angka dari 1 sampai 8 secara berurutan!</p>
 </header>
 <main>
-  <section class="panel">
-    <h2>Petunjuk Pengerjaan</h2>
-    <ul>
-      <li>Bacalah setiap pertanyaan dengan teliti.</li>
-      <li>Pilih satu jawaban yang paling tepat untuk setiap soal.</li>
-      <li>Kerjakan seluruh 10 soal, lalu tekan tombol <strong>Periksa Jawaban</strong>.</li>
-      <li>Nilai dan pembahasan akan muncul setelah jawaban diperiksa.</li>
-    </ul>
-    <div class="meta"><span>Jumlah soal: 10</span><span>Jenis: Pilihan ganda</span><span>Skor maksimal: 100</span></div>
-  </section>
-  <form id="quizForm">
-    <div id="questions"></div>
-    <section class="panel">
-      <button type="submit">Periksa Jawaban</button>
-      <button type="button" class="secondary" onclick="resetQuiz()">Ulangi Kuis</button>
-    </section>
-  </form>
-  <section class="panel" id="result" aria-live="polite">
-    <h2>Hasil Kuis</h2>
-    <p class="score" id="score"></p>
-    <p id="summary"></p>
-    <div id="review"></div>
-    <button type="button" onclick="resetQuiz()">Kerjakan Kembali</button>
+  <section class="card">
+    <p class="instructions"><strong>Cara bermain:</strong> Klik atau sentuh kotak angka yang berada di sebelah ruang kosong untuk memindahkannya. Susun angka menjadi urutan 1, 2, 3, 4, 5, 6, 7, 8. Ruang kosong harus berada di kotak terakhir.</p>
+    <div class="status">
+      <span>Langkah: <span id="moves">0</span></span>
+      <span>Waktu: <span id="time">00:00</span></span>
+    </div>
+    <div class="board" id="board" aria-label="Papan puzzle angka"></div>
+    <div class="controls">
+      <button class="action" id="shuffle">Acak Puzzle</button>
+      <button class="action secondary" id="reset">Mulai Ulang</button>
+    </div>
+    <p class="message" id="message" aria-live="polite">Selamat bermain! Cobalah menyelesaikan puzzle.</p>
+    <p class="note">Tips: Mulailah dengan menyusun angka dari baris paling atas.</p>
   </section>
 </main>
-<footer>Belajar jaringan komputer dengan cerdas dan bertanggung jawab.</footer>
+<footer>Permainan edukatif Informatika · Latihan logika dan pemecahan masalah</footer>
 <script>
-const data = [
- {q:"Jaringan komputer yang mencakup area sangat kecil, seperti koneksi antarperangkat pribadi, disebut ...",o:["LAN","PAN","MAN","WAN"],a:1,e:"PAN (Personal Area Network) menghubungkan perangkat pribadi dalam jangkauan dekat, misalnya ponsel dengan headset."},
- {q:"Jaringan yang biasanya digunakan untuk menghubungkan komputer-komputer dalam satu laboratorium sekolah adalah ...",o:["WAN","MAN","LAN","Internet global"],a:2,e:"LAN (Local Area Network) menghubungkan perangkat dalam area terbatas, seperti ruangan, gedung, atau sekolah."},
- {q:"Sebuah jaringan menghubungkan beberapa gedung perkantoran dalam satu kota. Jenis jaringan yang paling sesuai adalah ...",o:["PAN","MAN","LAN","SAN"],a:1,e:"MAN (Metropolitan Area Network) mencakup wilayah kota atau area metropolitan."},
- {q:"Jaringan yang menghubungkan kantor pusat di Jakarta dengan kantor cabang di berbagai negara termasuk ...",o:["PAN","LAN","WAN","CAN"],a:2,e:"WAN (Wide Area Network) mencakup wilayah geografis yang luas dan dapat menghubungkan jaringan antarkota maupun antarnegara."},
- {q:"Teknologi Bluetooth yang menghubungkan ponsel dengan earphone merupakan contoh penggunaan ...",o:["PAN","MAN","WAN","Internet"],a:0,e:"Bluetooth umumnya digunakan untuk koneksi jarak dekat antarpiranti pribadi, sehingga termasuk PAN."},
- {q:"Perbedaan utama LAN dan WAN terletak pada ...",o:["Warna kabel yang digunakan","Luas wilayah cakupan jaringan","Merek komputer yang dipakai","Jumlah aplikasi di komputer"],a:1,e:"LAN memiliki cakupan geografis terbatas, sedangkan WAN menghubungkan jaringan pada wilayah yang jauh lebih luas."},
- {q:"Jaringan komputer yang menghubungkan beberapa jaringan lokal di area kampus atau kompleks universitas sering disebut ...",o:["CAN (Campus Area Network)","PAN (Personal Area Network)","WAN (Wide Area Network)","GAN (Global Area Network)"],a:0,e:"CAN (Campus Area Network) menghubungkan beberapa LAN dalam lingkungan kampus atau kompleks organisasi."},
- {q:"Manakah pernyataan yang tepat tentang internet?",o:["Internet hanya menghubungkan komputer dalam satu ruangan","Internet merupakan jaringan global yang menghubungkan banyak jaringan","Internet hanya dapat digunakan melalui kabel","Internet sama dengan PAN"],a:1,e:"Internet adalah jaringan global yang menghubungkan berbagai jaringan dan perangkat di seluruh dunia."},
- {q:"Sebuah perpustakaan memiliki 20 komputer yang saling terhubung dalam satu gedung untuk berbagi printer dan berkas. Jenis jaringan yang tepat adalah ...",o:["LAN","WAN","MAN","PAN"],a:0,e:"Karena seluruh komputer berada dalam area satu gedung, LAN merupakan pilihan yang tepat."},
- {q:"Pernyataan manakah yang paling tepat mengenai pemilihan jenis jaringan komputer?",o:["Semua jaringan harus menggunakan WAN","Jenis jaringan dipilih berdasarkan kebutuhan dan luas cakupan","PAN digunakan untuk menghubungkan seluruh negara","LAN selalu memiliki cakupan lebih luas daripada MAN"],a:1,e:"Pemilihan jaringan mempertimbangkan kebutuhan komunikasi, jarak, jumlah perangkat, biaya, dan cakupan wilayah."}
-];
-const container=document.getElementById("questions");
-data.forEach((item,i)=>{
- const section=document.createElement("section");section.className="question";
- const title=document.createElement("h3");title.textContent=`Soal ${i+1}. ${item.q}`;section.appendChild(title);
- item.o.forEach((opt,j)=>{
-  const label=document.createElement("label");label.className="option";
-  const input=document.createElement("input");input.type="radio";input.name=`q${i}`;input.value=j;
-  label.appendChild(input);label.appendChild(document.createTextNode(`${String.fromCharCode(65+j)}. ${opt}`));section.appendChild(label);
- });
- container.appendChild(section);
-});
-document.getElementById("quizForm").addEventListener("submit",function(ev){
- ev.preventDefault();
- let correct=0,answered=0;const review=document.getElementById("review");review.innerHTML="";
- data.forEach((item,i)=>{
-  const selected=document.querySelector(`input[name="q${i}"]:checked`);
-  if(selected)answered++;
-  const ok=selected && Number(selected.value)===item.a;if(ok)correct++;
-  const box=document.createElement("div");box.className=`feedback ${ok?"correct":"incorrect"}`;
-  const chosen=selected?item.o[Number(selected.value)]:"Belum dijawab";
-  box.innerHTML=`<strong>Soal ${i+1}: ${ok?"Benar":"Belum tepat"}</strong><br>Jawaban Anda: ${chosen}<br>Jawaban yang tepat: ${item.o[item.a]}<br><span>${item.e}</span>`;
-  review.appendChild(box);
- });
- document.getElementById("score").textContent=`Nilai: ${correct*10} / 100`;
- document.getElementById("summary").textContent=`Jawaban benar ${correct} dari 10 soal. Soal yang dijawab: ${answered} dari 10.`;
- document.getElementById("result").style.display="block";
- document.getElementById("result").scrollIntoView({behavior:"smooth"});
-});
-function resetQuiz(){
- document.getElementById("quizForm").reset();
- document.getElementById("result").style.display="none";
- window.scrollTo({top:0,behavior:"smooth"});
+const boardEl=document.getElementById('board');
+const movesEl=document.getElementById('moves');
+const timeEl=document.getElementById('time');
+const messageEl=document.getElementById('message');
+const solved=[1,2,3,4,5,6,7,8,0];
+let tiles=[...solved],moves=0,seconds=0,timer=null,started=false,finished=false;
+
+function render(){
+  boardEl.innerHTML='';
+  tiles.forEach((n,index)=>{
+    const btn=document.createElement('button');
+    btn.className='tile'+(n===0?' empty':'');
+    btn.type='button';
+    btn.textContent=n===0?'':n;
+    btn.setAttribute('aria-label',n===0?'Ruang kosong':`Pindahkan angka ${n}`);
+    btn.disabled=n===0||finished;
+    btn.addEventListener('click',()=>move(index));
+    boardEl.appendChild(btn);
+  });
+  movesEl.textContent=moves;
 }
+function neighbors(index){
+  const row=Math.floor(index/3),col=index%3;
+  const result=[];
+  if(row>0)result.push(index-3);
+  if(row<2)result.push(index+3);
+  if(col>0)result.push(index-1);
+  if(col<2)result.push(index+1);
+  return result;
+}
+function startTimer(){
+  if(started)return;
+  started=true;
+  timer=setInterval(()=>{
+    seconds++;
+    const m=String(Math.floor(seconds/60)).padStart(2,'0');
+    const s=String(seconds%60).padStart(2,'0');
+    timeEl.textContent=`${m}:${s}`;
+  },1000);
+}
+function move(index){
+  if(finished)return;
+  const empty=tiles.indexOf(0);
+  if(!neighbors(empty).includes(index))return;
+  startTimer();
+  [tiles[index],tiles[empty]]=[tiles[empty],tiles[index]];
+  moves++;
+  render();
+  if(tiles.every((n,i)=>n===solved[i])){
+    finished=true;clearInterval(timer);
+    messageEl.textContent=`🎉 Hebat! Puzzle selesai dalam ${moves} langkah dan ${timeEl.textContent}.`;
+    render();
+  }else{
+    messageEl.textContent='Bagus! Lanjutkan menyusun angka.';
+  }
+}
+function shuffle(){
+  tiles=[...solved];
+  let previousEmpty=-1;
+  // Mengacak dengan gerakan legal agar puzzle selalu dapat diselesaikan.
+  for(let i=0;i<250;i++){
+    const empty=tiles.indexOf(0);
+    let choices=neighbors(empty).filter(x=>x!==previousEmpty);
+    if(!choices.length)choices=neighbors(empty);
+    const chosen=choices[Math.floor(Math.random()*choices.length)];
+    [tiles[chosen],tiles[empty]]=[tiles[empty],tiles[chosen]];
+    previousEmpty=empty;
+  }
+  if(tiles.every((n,i)=>n===solved[i]))shuffle();
+  resetStats();
+  messageEl.textContent='Puzzle sudah diacak. Silakan mulai!';
+  render();
+}
+function resetStats(){
+  clearInterval(timer);timer=null;started=false;finished=false;moves=0;seconds=0;
+  movesEl.textContent='0';timeEl.textContent='00:00';
+}
+function restart(){
+  tiles=[...solved];resetStats();
+  messageEl.textContent='Papan dikembalikan ke susunan awal. Tekan Acak Puzzle untuk bermain.';
+  render();
+}
+document.getElementById('shuffle').addEventListener('click',shuffle);
+document.getElementById('reset').addEventListener('click',restart);
+render();
 </script>
 </body>
 </html>
