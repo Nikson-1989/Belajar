@@ -1,1 +1,160 @@
-selamat datang di website Nikson Tarigan S.Kom
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dampak Sosial Informatika</title>
+  <style>
+    :root { --navy:#15324b; --blue:#176b9a; --light:#eef6fb; --ink:#243746; --green:#287a5b; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial, Helvetica, sans-serif; line-height:1.65; color:var(--ink); background:#f4f7fa; }
+    header { color:white; padding:54px 20px; text-align:center; background:linear-gradient(125deg,#15324b,#176b9a); }
+    header h1 { margin:0 0 10px; font-size:clamp(2rem,5vw,3rem); }
+    header p { max-width:760px; margin:auto; font-size:1.08rem; }
+    nav { background:#10283b; padding:12px 16px; text-align:center; position:sticky; top:0; z-index:2; }
+    nav a { color:white; text-decoration:none; margin:0 10px; font-size:.95rem; }
+    nav a:hover { text-decoration:underline; }
+    main { max-width:1050px; margin:28px auto; padding:0 18px; }
+    section { background:white; padding:25px; margin:20px 0; border-radius:14px; box-shadow:0 3px 14px #17324b12; }
+    h2 { color:var(--navy); margin-top:0; border-bottom:2px solid #dceaf3; padding-bottom:8px; }
+    h3 { color:var(--blue); margin-bottom:6px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; }
+    .tile { background:var(--light); border-left:4px solid var(--blue); padding:15px; border-radius:9px; }
+    .positive { border-left-color:var(--green); }
+    .warning { border-left-color:#c27a21; }
+    .callout { background:#eaf5ef; border:1px solid #c9e5d4; padding:16px; border-radius:10px; }
+    li { margin:7px 0; }
+    .question { padding:14px; background:#f4f8fb; border-radius:9px; margin:12px 0; }
+    button { background:var(--blue); color:white; border:0; padding:10px 16px; border-radius:8px; cursor:pointer; font-size:1rem; }
+    button:hover { background:var(--navy); }
+    .answer { display:none; margin-top:8px; color:var(--green); font-weight:bold; }
+    footer { text-align:center; padding:25px; color:#526575; }
+    @media print { nav, button { display:none; } body { background:white; } section { box-shadow:none; border:1px solid #ddd; break-inside:avoid; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dampak Sosial Informatika</h1>
+    <p>Memahami pengaruh teknologi informasi dan komunikasi terhadap kehidupan individu, masyarakat, pendidikan, ekonomi, dan budaya.</p>
+  </header>
+  <nav>
+    <a href="#pengertian">Pengertian</a>
+    <a href="#positif">Dampak Positif</a>
+    <a href="#negatif">Dampak Negatif</a>
+    <a href="#etika">Etika Digital</a>
+    <a href="#aktivitas">Aktivitas</a>
+  </nav>
+  <main>
+    <section id="pengertian">
+      <h2>1. Pengertian Dampak Sosial Informatika</h2>
+      <p><strong>Dampak sosial informatika</strong> adalah perubahan yang terjadi dalam kehidupan manusia dan masyarakat akibat penggunaan teknologi komputer, internet, perangkat digital, serta sistem informasi.</p>
+      <p>Teknologi informatika membantu manusia berkomunikasi, belajar, bekerja, bertransaksi, dan memperoleh informasi. Namun, penggunaannya juga dapat menimbulkan masalah jika tidak disertai pengetahuan, tanggung jawab, dan etika.</p>
+    </section>
+
+    <section id="positif">
+      <h2>2. Dampak Positif Informatika</h2>
+      <div class="grid">
+        <div class="tile positive"><h3>Komunikasi lebih mudah</h3><p>Pesan, panggilan video, dan konferensi daring memungkinkan orang berkomunikasi tanpa dibatasi jarak.</p></div>
+        <div class="tile positive"><h3>Pendidikan lebih luas</h3><p>Siswa dan guru dapat menggunakan kelas daring, perpustakaan digital, video pembelajaran, dan sumber belajar terbuka.</p></div>
+        <div class="tile positive"><h3>Efisiensi pekerjaan</h3><p>Aplikasi membantu mengolah dokumen, data, dan tugas rutin sehingga pekerjaan dapat dilakukan lebih cepat.</p></div>
+        <div class="tile positive"><h3>Peluang ekonomi</h3><p>Perdagangan elektronik dan layanan digital membuka peluang usaha serta jenis pekerjaan baru.</p></div>
+        <div class="tile positive"><h3>Akses informasi</h3><p>Masyarakat dapat mencari berita, pengetahuan, dan layanan publik dengan lebih mudah.</p></div>
+        <div class="tile positive"><h3>Kreativitas dan kolaborasi</h3><p>Perangkat digital mendukung pembuatan karya, berbagi ide, dan kerja sama dari lokasi berbeda.</p></div>
+      </div>
+    </section>
+
+    <section id="negatif">
+      <h2>3. Dampak Negatif dan Tantangannya</h2>
+      <div class="grid">
+        <div class="tile warning"><h3>Penyebaran hoaks</h3><p>Informasi palsu dapat menyesatkan masyarakat dan memicu kesalahpahaman.</p></div>
+        <div class="tile warning"><h3>Perundungan siber</h3><p>Teknologi dapat disalahgunakan untuk menghina, mengancam, atau mempermalukan orang lain.</p></div>
+        <div class="tile warning"><h3>Pelanggaran privasi</h3><p>Data pribadi dapat tersebar atau digunakan tanpa izin jika tidak dilindungi dengan baik.</p></div>
+        <div class="tile warning"><h3>Kejahatan digital</h3><p>Penipuan daring, phishing, pencurian akun, dan malware dapat merugikan pengguna.</p></div>
+        <div class="tile warning"><h3>Kesenjangan digital</h3><p>Tidak semua orang memiliki perangkat, jaringan internet, atau keterampilan digital yang sama.</p></div>
+        <div class="tile warning"><h3>Ketergantungan teknologi</h3><p>Penggunaan berlebihan dapat mengganggu waktu belajar, istirahat, aktivitas fisik, dan interaksi langsung.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. Pengaruh Informatika dalam Berbagai Bidang</h2>
+      <ul>
+        <li><strong>Pendidikan:</strong> pembelajaran digital, ujian berbasis komputer, dan kelas jarak jauh.</li>
+        <li><strong>Kesehatan:</strong> pendaftaran daring, konsultasi jarak jauh, dan pengelolaan informasi pasien.</li>
+        <li><strong>Ekonomi:</strong> pembayaran digital, toko daring, dan pemasaran melalui media sosial.</li>
+        <li><strong>Pemerintahan:</strong> layanan administrasi elektronik dan penyampaian informasi publik.</li>
+        <li><strong>Budaya:</strong> penyebaran karya budaya sekaligus tantangan menjaga bahasa, tradisi, dan menghormati perbedaan.</li>
+        <li><strong>Lingkungan:</strong> pemantauan lingkungan dan efisiensi sumber daya, disertai tantangan limbah elektronik.</li>
+      </ul>
+    </section>
+
+    <section id="etika">
+      <h2>5. Etika dan Tanggung Jawab di Dunia Digital</h2>
+      <p>Setiap pengguna teknologi memiliki tanggung jawab untuk menjaga keamanan diri sendiri dan menghormati orang lain.</p>
+      <ul>
+        <li>Periksa kebenaran informasi sebelum membagikannya.</li>
+        <li>Gunakan bahasa yang sopan dan jangan melakukan perundungan siber.</li>
+        <li>Jaga data pribadi, kata sandi, dan kode verifikasi.</li>
+        <li>Minta izin sebelum mengunggah foto atau membagikan informasi orang lain.</li>
+        <li>Hormati hak cipta dengan mencantumkan sumber dan tidak mengambil karya tanpa izin.</li>
+        <li>Gunakan teknologi secara seimbang dan sesuai kebutuhan.</li>
+        <li>Laporkan konten atau perilaku berbahaya kepada orang dewasa tepercaya atau pihak yang berwenang.</li>
+      </ul>
+      <div class="callout"><strong>Ingat:</strong> Jejak digital dapat bertahan lama. Pikirkan manfaat dan akibat sebelum mengunggah, mengomentari, atau membagikan sesuatu.</div>
+    </section>
+
+    <section>
+      <h2>6. Cara Menggunakan Teknologi secara Bijak</h2>
+      <ol>
+        <li>Tentukan tujuan sebelum menggunakan perangkat atau internet.</li>
+        <li>Pilih sumber informasi yang jelas dan dapat dipercaya.</li>
+        <li>Aktifkan pengamanan akun dan gunakan kata sandi yang kuat serta berbeda.</li>
+        <li>Jangan membuka tautan atau lampiran mencurigakan.</li>
+        <li>Seimbangkan kegiatan digital dengan belajar, beristirahat, dan berinteraksi langsung.</li>
+        <li>Manfaatkan teknologi untuk belajar, berkarya, dan membantu sesama.</li>
+      </ol>
+    </section>
+
+    <section id="aktivitas">
+      <h2>7. Aktivitas dan Pertanyaan Diskusi</h2>
+      <div class="question">
+        <strong>1. Seorang siswa menerima berita mengejutkan melalui grup kelas. Apa tindakan yang sebaiknya dilakukan sebelum membagikannya?</strong>
+        <button onclick="toggleAnswer('a1')">Lihat contoh jawaban</button>
+        <p class="answer" id="a1">Memeriksa sumber, tanggal, dan kebenaran berita melalui sumber tepercaya; jangan langsung menyebarkannya.</p>
+      </div>
+      <div class="question">
+        <strong>2. Mengapa kita tidak boleh membagikan kata sandi atau kode verifikasi kepada orang lain?</strong>
+        <button onclick="toggleAnswer('a2')">Lihat contoh jawaban</button>
+        <p class="answer" id="a2">Karena informasi tersebut dapat digunakan untuk mengambil alih akun dan mengakses data pribadi.</p>
+      </div>
+      <div class="question">
+        <strong>3. Sebutkan dua dampak positif dan dua dampak negatif informatika dalam kehidupan sehari-hari.</strong>
+        <button onclick="toggleAnswer('a3')">Lihat contoh jawaban</button>
+        <p class="answer" id="a3">Contoh positif: komunikasi cepat dan akses belajar. Contoh negatif: hoaks dan penipuan daring.</p>
+      </div>
+      <div class="question">
+        <strong>4. Bagaimana cara menerapkan etika digital saat menggunakan media sosial?</strong>
+        <button onclick="toggleAnswer('a4')">Lihat contoh jawaban</button>
+        <p class="answer" id="a4">Berkomunikasi dengan sopan, menghargai privasi, memeriksa informasi, dan menghormati hak cipta.</p>
+      </div>
+      <h3>Tugas Kelompok</h3>
+      <p>Bentuk kelompok kecil. Amati satu contoh penggunaan teknologi di lingkungan sekolah atau masyarakat. Catat manfaat, risiko, dan tiga saran agar teknologi digunakan secara bertanggung jawab. Presentasikan hasil diskusi di kelas.</p>
+    </section>
+
+    <section>
+      <h2>8. Kesimpulan</h2>
+      <p>Informatika membawa banyak manfaat bagi kehidupan sosial, seperti mempermudah komunikasi, pendidikan, dan pekerjaan. Di sisi lain, teknologi juga menghadirkan risiko seperti hoaks, kejahatan digital, perundungan siber, dan pelanggaran privasi. Karena itu, setiap orang perlu memiliki literasi digital, menjaga keamanan data, serta menerapkan etika dan tanggung jawab saat menggunakan teknologi.</p>
+    </section>
+  </main>
+  <footer>
+    <p>Materi Informatika — Dampak Sosial Informatika</p>
+    <p>Gunakan teknologi dengan cerdas, aman, dan bertanggung jawab.</p>
+  </footer>
+  <script>
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
+
