@@ -3,141 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Permainan Puzzle Angka</title>
+<title>Sky Adventure - Game Pesawat</title>
 <style>
-:root{--navy:#173653;--blue:#1976a8;--pale:#eaf4fa;--ink:#243746;--green:#26734f}
+:root{--sky:#bfe9ff;--deep:#17618e;--ink:#18384d}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(145deg,#edf5fa,#f8fafc)}
-header{text-align:center;padding:32px 16px 18px;color:var(--navy)}
-header h1{margin:0 0 8px;font-size:clamp(1.8rem,5vw,2.6rem)}
-header p{margin:0;color:#536979}
-main{max-width:760px;margin:0 auto;padding:10px 16px 36px}
-.card{background:white;border-radius:18px;padding:22px;box-shadow:0 8px 28px #17365314}
-.instructions{line-height:1.6;margin-top:0}
-.status{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:18px 0;font-weight:bold;color:var(--navy)}
-.board{width:min(88vw,420px);aspect-ratio:1;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px;background:#dce9f1;border-radius:15px}
-.tile{border:0;border-radius:11px;background:linear-gradient(145deg,#2589bd,#17658f);color:white;font-size:clamp(1.8rem,7vw,3rem);font-weight:bold;cursor:pointer;box-shadow:0 3px 7px #12364b30;transition:transform .12s,filter .12s}
-.tile:hover{filter:brightness(1.08);transform:translateY(-2px)}
-.tile:focus-visible{outline:4px solid #f0b84a;outline-offset:2px}
-.tile.empty{background:#f5f8fa;box-shadow:inset 0 2px 7px #17365315;cursor:default}
-.controls{text-align:center;margin-top:20px}
-button.action{border:0;border-radius:9px;padding:11px 17px;margin:5px;background:var(--blue);color:white;font-size:1rem;cursor:pointer}
-button.action:hover{background:var(--navy)}
-button.secondary{background:#647786}
-.message{min-height:28px;text-align:center;font-weight:bold;color:var(--green);margin:14px 0 0}
-.note{font-size:.92rem;color:#5a6c79;text-align:center;margin:14px 0 0}
-footer{text-align:center;color:#6b7d88;padding:0 15px 25px;font-size:.9rem}
-@media(max-width:420px){.card{padding:15px}.board{gap:5px;padding:5px}}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(#e9f8ff,#c6eaff);color:var(--ink);min-height:100vh}
+header{text-align:center;padding:22px 12px 10px}
+h1{margin:0 0 6px;font-size:clamp(1.7rem,5vw,2.4rem);color:#15547d}
+header p{margin:0;color:#456779}
+main{max-width:760px;margin:12px auto 28px;padding:0 14px}
+.game-card{background:#fff;padding:14px;border-radius:18px;box-shadow:0 8px 25px #15547d1c}
+.hud{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:2px 5px 12px;font-weight:bold;color:#174b6b}
+canvas{display:block;width:100%;height:auto;aspect-ratio:3/4;background:#8bd5f5;border-radius:13px;touch-action:none}
+.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:13px}
+button{border:0;border-radius:10px;padding:11px 18px;background:#176d9f;color:white;font-weight:bold;font-size:1rem;cursor:pointer}
+button:hover{background:#124d72}
+button:focus-visible{outline:3px solid #f0b94c;outline-offset:3px}
+.instructions{text-align:center;color:#526c7b;font-size:.92rem;line-height:1.5;margin:12px 4px 2px}
+.touch-controls{display:flex;justify-content:center;gap:18px;margin-top:12px}
+.touch-controls button{width:76px;height:48px;font-size:1.25rem;touch-action:none}
+footer{text-align:center;color:#5d7888;font-size:.9rem;padding:0 12px 22px}
 </style>
 </head>
 <body>
 <header>
-  <h1>🧩 Puzzle Angka</h1>
-  <p>Susun angka dari 1 sampai 8 secara berurutan!</p>
+<h1>✈️ Sky Adventure</h1>
+<p>Terbangkan pesawat, hindari awan badai, dan kumpulkan bintang!</p>
 </header>
 <main>
-  <section class="card">
-    <p class="instructions"><strong>Cara bermain:</strong> Klik atau sentuh kotak angka yang berada di sebelah ruang kosong untuk memindahkannya. Susun angka menjadi urutan 1, 2, 3, 4, 5, 6, 7, 8. Ruang kosong harus berada di kotak terakhir.</p>
-    <div class="status">
-      <span>Langkah: <span id="moves">0</span></span>
-      <span>Waktu: <span id="time">00:00</span></span>
-    </div>
-    <div class="board" id="board" aria-label="Papan puzzle angka"></div>
-    <div class="controls">
-      <button class="action" id="shuffle">Acak Puzzle</button>
-      <button class="action secondary" id="reset">Mulai Ulang</button>
-    </div>
-    <p class="message" id="message" aria-live="polite">Selamat bermain! Cobalah menyelesaikan puzzle.</p>
-    <p class="note">Tips: Mulailah dengan menyusun angka dari baris paling atas.</p>
-  </section>
+<section class="game-card">
+<div class="hud">
+<span>⭐ Skor: <span id="score">0</span></span>
+<span>❤️ Kesempatan: <span id="lives">3</span></span>
+<span>🏆 Terbaik: <span id="best">0</span></span>
+</div>
+<canvas id="game" width="600" height="800" aria-label="Permainan pesawat terbang"></canvas>
+<div class="controls">
+<button id="startBtn">Mulai Bermain</button>
+<button id="pauseBtn">Jeda</button>
+<button id="restartBtn">Ulangi</button>
+</div>
+<div class="touch-controls">
+<button id="leftBtn" aria-label="Terbang ke kiri">◀</button>
+<button id="rightBtn" aria-label="Terbang ke kanan">▶</button>
+</div>
+<p class="instructions">Gunakan tombol ← dan → pada keyboard, atau tombol arah di layar ponsel. Hindari awan gelap dan kumpulkan bintang. Tekan Spasi untuk jeda.</p>
+</section>
 </main>
-<footer>Permainan edukatif Informatika · Latihan logika dan pemecahan masalah</footer>
+<footer>Game edukasi sederhana · Latihan koordinasi dan konsentrasi</footer>
 <script>
-const boardEl=document.getElementById('board');
-const movesEl=document.getElementById('moves');
-const timeEl=document.getElementById('time');
-const messageEl=document.getElementById('message');
-const solved=[1,2,3,4,5,6,7,8,0];
-let tiles=[...solved],moves=0,seconds=0,timer=null,started=false,finished=false;
+(() => {
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
+const scoreEl=document.getElementById('score'),livesEl=document.getElementById('lives'),bestEl=document.getElementById('best');
+const startBtn=document.getElementById('startBtn'),pauseBtn=document.getElementById('pauseBtn'),restartBtn=document.getElementById('restartBtn');
+const W=canvas.width,H=canvas.height;
+let plane,items,score,lives,best,frame,state,keys={},touch={},stars=[];
+best=0;
+try{best=Number(localStorage.getItem('skyAdventureBest')||0)}catch(e){}
+bestEl.textContent=best;
 
-function render(){
-  boardEl.innerHTML='';
-  tiles.forEach((n,index)=>{
-    const btn=document.createElement('button');
-    btn.className='tile'+(n===0?' empty':'');
-    btn.type='button';
-    btn.textContent=n===0?'':n;
-    btn.setAttribute('aria-label',n===0?'Ruang kosong':`Pindahkan angka ${n}`);
-    btn.disabled=n===0||finished;
-    btn.addEventListener('click',()=>move(index));
-    boardEl.appendChild(btn);
-  });
-  movesEl.textContent=moves;
+function reset(){
+ plane={x:W/2,y:H-125,w:58,h:76,speed:7};
+ items=[];score=0;lives=3;frame=0;state='ready';
+ scoreEl.textContent=score;livesEl.textContent=lives;
 }
-function neighbors(index){
-  const row=Math.floor(index/3),col=index%3;
-  const result=[];
-  if(row>0)result.push(index-3);
-  if(row<2)result.push(index+3);
-  if(col>0)result.push(index-1);
-  if(col<2)result.push(index+1);
-  return result;
+function drawBackground(){
+ const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#73c9f0');g.addColorStop(1,'#d8f5ff');
+ ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ // Matahari
+ ctx.fillStyle='#fff2a8';ctx.beginPath();ctx.arc(490,105,48,0,Math.PI*2);ctx.fill();
+ // Awan dekoratif
+ for(let i=0;i<5;i++){
+  const x=((i*157-frame*.35)%(W+180)+W+180)%(W+180)-70;
+  const y=80+(i%3)*125;
+  drawCloud(x,y,false);
+ }
 }
-function startTimer(){
-  if(started)return;
-  started=true;
-  timer=setInterval(()=>{
-    seconds++;
-    const m=String(Math.floor(seconds/60)).padStart(2,'0');
-    const s=String(seconds%60).padStart(2,'0');
-    timeEl.textContent=`${m}:${s}`;
-  },1000);
+function drawCloud(x,y,dark){
+ ctx.fillStyle=dark?'#607d91':'rgba(255,255,255,.85)';
+ ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.arc(x+27,y-12,31,0,Math.PI*2);ctx.arc(x+57,y,24,0,Math.PI*2);ctx.fill();
 }
-function move(index){
-  if(finished)return;
-  const empty=tiles.indexOf(0);
-  if(!neighbors(empty).includes(index))return;
-  startTimer();
-  [tiles[index],tiles[empty]]=[tiles[empty],tiles[index]];
-  moves++;
-  render();
-  if(tiles.every((n,i)=>n===solved[i])){
-    finished=true;clearInterval(timer);
-    messageEl.textContent=`🎉 Hebat! Puzzle selesai dalam ${moves} langkah dan ${timeEl.textContent}.`;
-    render();
-  }else{
-    messageEl.textContent='Bagus! Lanjutkan menyusun angka.';
+function drawPlane(){
+ ctx.save();ctx.translate(plane.x,plane.y);
+ // badan pesawat
+ ctx.fillStyle='#f5f8fb';ctx.strokeStyle='#245675';ctx.lineWidth=3;
+ ctx.beginPath();ctx.moveTo(0,-39);ctx.quadraticCurveTo(15,-18,12,22);ctx.lineTo(0,34);ctx.lineTo(-12,22);ctx.quadraticCurveTo(-15,-18,0,-39);ctx.fill();ctx.stroke();
+ // sayap
+ ctx.fillStyle='#e94f58';ctx.beginPath();ctx.moveTo(-10,-4);ctx.lineTo(-34,17);ctx.lineTo(-29,26);ctx.lineTo(-7,19);ctx.lineTo(7,19);ctx.lineTo(29,26);ctx.lineTo(34,17);ctx.lineTo(10,-4);ctx.fill();ctx.stroke();
+ // ekor
+ ctx.beginPath();ctx.moveTo(-7,23);ctx.lineTo(-19,34);ctx.lineTo(-14,38);ctx.lineTo(14,38);ctx.lineTo(19,34);ctx.lineTo(7,23);ctx.fill();ctx.stroke();
+ ctx.fillStyle='#7ed8f5';ctx.beginPath();ctx.ellipse(0,-13,6,10,0,0,Math.PI*2);ctx.fill();
+ ctx.restore();
+}
+function drawStar(x,y){
+ ctx.save();ctx.translate(x,y);ctx.fillStyle='#ffca3a';ctx.strokeStyle='#d68a00';ctx.lineWidth=2;
+ ctx.beginPath();for(let i=0;i<10;i++){const r=i%2?10:21;const a=-Math.PI/2+i*Math.PI/5;ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();
+}
+function drawItems(){
+ for(const it of items){if(it.type==='star')drawStar(it.x,it.y);else drawCloud(it.x,it.y,true)}
+}
+function overlay(title,subtitle){
+ ctx.fillStyle='rgba(11,45,67,.62)';ctx.fillRect(0,0,W,H);
+ ctx.textAlign='center';ctx.fillStyle='white';ctx.font='bold 48px Arial';ctx.fillText(title,W/2,H/2-22);
+ ctx.font='24px Arial';ctx.fillText(subtitle,W/2,H/2+25);
+}
+function update(){
+ frame++;
+ if(keys.ArrowLeft||touch.left)plane.x-=plane.speed;
+ if(keys.ArrowRight||touch.right)plane.x+=plane.speed;
+ plane.x=Math.max(42,Math.min(W-42,plane.x));
+ if(frame%48===0){
+  const x=55+Math.random()*(W-110);
+  items.push({x,y:-35,type:Math.random()<.68?'cloud':'star',r:25,speed:3.2+Math.min(score/180,3)});
+ }
+ for(const it of items)it.y+=it.speed;
+ items=items.filter(it=>it.y<H+50);
+ for(let i=items.length-1;i>=0;i--){
+  const it=items[i],dx=it.x-plane.x,dy=it.y-plane.y;
+  if(Math.hypot(dx,dy)<(it.type==='star'?31:38)){
+   if(it.type==='star'){score+=10;scoreEl.textContent=score}
+   else{lives--;livesEl.textContent=lives;if(lives<=0){endGame()}}
+   items.splice(i,1);
   }
+ }
+ if(score>best){best=score;bestEl.textContent=best;try{localStorage.setItem('skyAdventureBest',best)}catch(e){}}
 }
-function shuffle(){
-  tiles=[...solved];
-  let previousEmpty=-1;
-  // Mengacak dengan gerakan legal agar puzzle selalu dapat diselesaikan.
-  for(let i=0;i<250;i++){
-    const empty=tiles.indexOf(0);
-    let choices=neighbors(empty).filter(x=>x!==previousEmpty);
-    if(!choices.length)choices=neighbors(empty);
-    const chosen=choices[Math.floor(Math.random()*choices.length)];
-    [tiles[chosen],tiles[empty]]=[tiles[empty],tiles[chosen]];
-    previousEmpty=empty;
-  }
-  if(tiles.every((n,i)=>n===solved[i]))shuffle();
-  resetStats();
-  messageEl.textContent='Puzzle sudah diacak. Silakan mulai!';
-  render();
+function endGame(){state='over';}
+function draw(){
+ drawBackground();drawItems();drawPlane();
+ if(state==='ready')overlay('SKY ADVENTURE','Tekan Mulai Bermain');
+ if(state==='paused')overlay('DIJEDA','Tekan Jeda untuk melanjutkan');
+ if(state==='over')overlay('PERMAINAN SELESAI',`Skor kamu: ${score}  ·  Tekan Ulangi`);
 }
-function resetStats(){
-  clearInterval(timer);timer=null;started=false;finished=false;moves=0;seconds=0;
-  movesEl.textContent='0';timeEl.textContent='00:00';
+function loop(){
+ if(state==='playing')update();
+ draw();
+ requestAnimationFrame(loop);
 }
-function restart(){
-  tiles=[...solved];resetStats();
-  messageEl.textContent='Papan dikembalikan ke susunan awal. Tekan Acak Puzzle untuk bermain.';
-  render();
+function start(){if(state==='ready'||state==='over'){reset();state='playing'}else if(state==='paused'){state='playing'}}
+function togglePause(){if(state==='playing')state='paused';else if(state==='paused')state='playing'}
+startBtn.addEventListener('click',start);
+pauseBtn.addEventListener('click',togglePause);
+restartBtn.addEventListener('click',()=>{reset();state='playing'});
+document.addEventListener('keydown',e=>{
+ if(['ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();
+ keys[e.key]=true;if(e.key===' ')togglePause();
+});
+document.addEventListener('keyup',e=>{keys[e.key]=false});
+function bindHold(id,dir){
+ const el=document.getElementById(id);
+ const on=e=>{e.preventDefault();touch[dir]=true};
+ const off=e=>{e.preventDefault();touch[dir]=false};
+ el.addEventListener('pointerdown',on);
+ ['pointerup','pointerleave','pointercancel'].forEach(ev=>el.addEventListener(ev,off));
 }
-document.getElementById('shuffle').addEventListener('click',shuffle);
-document.getElementById('reset').addEventListener('click',restart);
-render();
+bindHold('leftBtn','left');bindHold('rightBtn','right');
+reset();loop();
+})();
 </script>
 </body>
 </html>
